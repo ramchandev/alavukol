@@ -19,12 +19,10 @@ Backend Modules:
   - Select which where is applicalbe (Multiple answers checkbox) (Multiple Answers)
   - Write Answers (Textarea)
  * Answers Type
-  - Extact answers
-  - Multiple answers
-  - Keywords
+   - Extact answers
+   - Multiple answers
+   - Keywords
  * Scoring Logic
-  - Direct marks
-  - Keywords weights
+   - Direct marks
+   - Keywords weights
 * Report Screens
-
- 
