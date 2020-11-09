@@ -1,10 +1,14 @@
 <?php 
 include("lang/en.php"); 
+
 require ("models/mod_ques-cat.php");
+$qc=new qcats();
+
 require ("classes/class_lib.php");
 $ak=new akol();
 
-$catinfo=$ak->getallinfo($query_getcats);
+$getall= $qc->getcats();
+$catinfo=$ak->getallinfo($getall);
 
 ?>
 <!DOCTYPE html>
@@ -53,12 +57,12 @@ $catinfo=$ak->getallinfo($query_getcats);
                                         <div class="form-group">
                                             <label for="parentcat"><?php echo $lng_parcat;?></label>
                                             <select class="form-control" id="parentcat" name="parentcat">
-                                                <option><?php echo $lng_none;?></option>
+                                                <option value="0"><?php echo $lng_none;?></option>
                                                 
                                                 <?php
                                                 for($p=0; $p<count($catinfo); $p++)
                                                 {
-                                                    if($catinfo[$p]['ParentID']=='')
+                                                    if($catinfo[$p]['ParentID']==0)
                                                     {
                                                         echo '<option value="'.$catinfo[$p]['ID'].'">'.$catinfo[$p]['Name'].'</option>';
                                                     }
@@ -99,13 +103,45 @@ $catinfo=$ak->getallinfo($query_getcats);
                                             if($catinfo) {                                                
                                                 for($c=0; $c<count($catinfo); $c++)
                                                 {
-                                                    echo '<tr>';
-                                                    echo '<td>'.$catinfo[$c]['Name'].'</td>';
-                                                    echo '<td>'.$catinfo[$c]['Description'].'</td>';
-                                                    echo '<td></td>';
-                                                    echo '<td><button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="more-vertical"></i></button>
-                                                    <button class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="trash-2"></i></button></td>';
-                                                    echo '</tr>';
+                                                    
+                                                    if($catinfo[$c]['ParentID']==0) //Parent 
+                                                        {    
+                                                        echo '<tr>';
+                                                        echo '<td>'.$catinfo[$c]['Name'].'</td>';
+                                                        echo '<td>'.$catinfo[$c]['Description'].'</td>';
+                                                        echo '<td></td>';
+                                                        echo '<td><button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="more-vertical"></i></button>
+                                                        <button class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="trash-2"></i></button></td>';
+                                                        echo '</tr>';
+
+                                                        // Check if this ID is in the Parent?
+                                                        $childquery=$qc->checkchild($catinfo[$c]['ID']); //Form the Query
+                                                        $childcats=$ak->getallinfo($childquery); //Fetch the data
+                                                        if($childcats)
+                                                        {
+                                                            for($ci=0; $ci<count($childcats); $ci++)
+                                                            {
+                                                                echo '<tr>';
+                                                                echo '<td> - '.$childcats[$ci]['Name'].'</td>';
+                                                                echo '<td>'.$childcats[$ci]['Description'].'</td>';
+                                                                echo '<td></td>';
+                                                                echo '<td><button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="more-vertical"></i></button>
+                                                                <button class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="trash-2"></i></button></td>';
+                                                                echo '</tr>';
+
+                                                            }
+
+                                                        }
+                                                        else{
+
+                                                        }
+
+                                                        // If it is there then Print it.
+                                                        // Else move on
+                                                        }
+
+                                                     
+                                                                                                    
 
                                                 }
                                             }
@@ -125,6 +161,11 @@ $catinfo=$ak->getallinfo($query_getcats);
         </div>
     </div>
     <?php include("includes/footer-scripts.php"); ?>
+<script>
+    $('#dataTable').dataTable( {
+  "ordering": false
+} );
+</script>
 </body>
 
 </html>
