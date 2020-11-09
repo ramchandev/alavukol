@@ -1,4 +1,4 @@
-<a class="navbar-brand" href="index.html"><?php echo $basename;?></a>
+<a class="navbar-brand" href="index.html"><?php echo $lng_basename;?></a>
             <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 mr-lg-2" id="sidebarToggle" href="#"><i data-feather="menu"></i></button>
             <form class="form-inline mr-auto d-none d-md-block">
                 <div class="input-group input-group-joined input-group-solid">
