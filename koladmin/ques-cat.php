@@ -52,8 +52,31 @@ $catinfo=$ak->getallinfo($getall);
                             <div class="card">
                                 <div class="card-header"><?php echo $lng_quescat_add; ?></div>
                                 <div class="card-body">
-                                    <form method="POST" name="addnewcat" action="actions/ques-cat-add.php">
-                                        <div class="form-group"><label for="catname"><?php echo $lng_name;?></label><input class="form-control" name="catname" id="catname" type="text" placeholder="" required></div>
+                                <?php
+                                $catname=$catdesc=$catpid='';
+                                if($_GET['action']=='edit' && $_GET['id']!='')
+                                {
+                                    $onecquery=$qc->getdata($_GET['id']); //Form the Query
+                                    $catdata=$ak->getallinfo($onecquery); //Fetch the data
+                                    $catname=$catdata[0]['Name'];
+                                    $catdesc=$catdata[0]['Description'];
+                                    $catpid=$catdata[0]['ParentID'];
+
+                                    $btntext=$lng_quescat_update;
+                                    $icon='save';
+                                    echo '<form method="POST" name="updatecat" action="actions/ques-cat-update.php">';
+                                    echo '<input type="hidden" name="catid" value="'.$_GET['id'].'">';
+                                }
+                                else
+                                {
+                                    $icon='plus';
+                                    echo '<form method="POST" name="addnewcat" action="actions/ques-cat-add.php">';
+                                    $btntext=$lng_quescat_add;
+
+                                }
+
+                                ?>                                    
+                                        <div class="form-group"><label for="catname"><?php echo $lng_name;?></label><input class="form-control" name="catname" id="catname" type="text" placeholder="" required value="<?php echo  $catname;?>"></div>
                                         <div class="form-group">
                                             <label for="parentcat"><?php echo $lng_parcat;?></label>
                                             <select class="form-control" id="parentcat" name="parentcat">
@@ -64,7 +87,16 @@ $catinfo=$ak->getallinfo($getall);
                                                 {
                                                     if($catinfo[$p]['ParentID']==0)
                                                     {
-                                                        echo '<option value="'.$catinfo[$p]['ID'].'">'.$catinfo[$p]['Name'].'</option>';
+                                                        if($catpid==$catinfo[$p]['ID'])
+                                                        {
+                                                           $sel='selected="selected"';
+                                                        }
+                                                        else
+                                                        {
+                                                            $sel='';
+
+                                                        }
+                                                        echo '<option '. $sel.' value="'.$catinfo[$p]['ID'].'">'.$catinfo[$p]['Name'].'</option>';
                                                     }
 
                                                 }
@@ -72,10 +104,10 @@ $catinfo=$ak->getallinfo($getall);
                                                 </select>                                                
                                             
                                         </div>
-                                        <div class="form-group"><label for="catdesc"><?php echo $lng_desc;?></label><textarea name="catdesc" class="form-control" id="catdesc"  rows="6"></textarea></div>  
+                                        <div class="form-group"><label for="catdesc"><?php echo $lng_desc;?></label><textarea name="catdesc" class="form-control" id="catdesc"  rows="6"><?php echo  $catdesc;?></textarea></div>  
                                         <div class="form-group">
                                         <button class="btn btn-success btn-sm" type="submit">
-                                        <i data-feather="plus"></i> <?php echo $lng_quescat_add; ?></button>
+                                        <i data-feather="<?php echo $icon;?>"></i>&nbsp;<?php echo $btntext; ?></button>
                                         </div>                                  
                                     </form>
                                 </div>
@@ -110,7 +142,8 @@ $catinfo=$ak->getallinfo($getall);
                                                         echo '<td>'.$catinfo[$c]['Name'].'</td>';
                                                         echo '<td>'.$catinfo[$c]['Description'].'</td>';
                                                         echo '<td></td>';
-                                                        echo '<td><button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="more-vertical"></i></button>
+                                                        echo '<td><a href="ques-cat.php?action=edit&id='.$catinfo[$c]['ID'].'"><button class="btn btn-datatable btn-icon btn-transparent-dark mr-2">
+                                                        <i data-feather="edit-2"></i></button></a>
                                                         <button class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="trash-2"></i></button></td>';
                                                         echo '</tr>';
 
@@ -125,7 +158,7 @@ $catinfo=$ak->getallinfo($getall);
                                                                 echo '<td> - '.$childcats[$ci]['Name'].'</td>';
                                                                 echo '<td>'.$childcats[$ci]['Description'].'</td>';
                                                                 echo '<td></td>';
-                                                                echo '<td><button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="more-vertical"></i></button>
+                                                                echo '<td><a href="ques-cat.php?action=edit&id='.$childcats[$ci]['ID'].'"><button class="btn btn-datatable btn-icon btn-transparent-dark mr-2"><i data-feather="edit-2"></i></button></a>
                                                                 <button class="btn btn-datatable btn-icon btn-transparent-dark"><i data-feather="trash-2"></i></button></td>';
                                                                 echo '</tr>';
 

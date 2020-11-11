@@ -13,3 +13,4 @@ $lng_desc='Description';
 $lng_total='Total';
 $lng_actions='Actions';
 $lng_cats='Categories';
+$lng_quescat_update='Update Category';

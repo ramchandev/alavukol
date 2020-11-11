@@ -13,6 +13,13 @@ class qcats
         
 
     }
+    public function getdata($cid)
+    {
+        
+        return "SELECT * FROM `kol_quescats` WHERE `ID` = ".$cid." ";
+        
+
+    }
 
 }
 
