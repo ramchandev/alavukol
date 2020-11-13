@@ -4,11 +4,12 @@ class akol
 
     public function getallinfo($sql) //get all info
     {
+
         include "db-config.php";
         $result = $conn->query($sql);
-        if ($result->num_rows > 0 ) {
-            $i=0;
-            while ( $row = $result->fetch_assoc() ) {
+        if ($result->num_rows > 0) {
+            $i = 0;
+            while ($row = $result->fetch_assoc()) {
                 $st[$i] = $row;
                 $i++;
             }
@@ -23,8 +24,8 @@ class akol
     {
         include "db-config.php";
         $result = $conn->query($sql);
-        if ($result->num_rows > 0 ) {
-            while ( $row = $result->fetch_assoc() ) {
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
                 $st = $row;
             }
         } else {
@@ -36,15 +37,12 @@ class akol
 
     function insupdata($sql) //Insert data
     {
-        include "db-config.php";   
-        if ($conn->query($sql) === true ) {
+        include "db-config.php";
+        if ($conn->query($sql) === true) {
         } else {
             echo 'Error: ' . $sql . '<br>' . $conn->error;
             exit;
         }
-         $conn->close();
-
+        $conn->close();
     }
-
-
 }
