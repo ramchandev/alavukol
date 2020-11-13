@@ -1,5 +1,5 @@
 <?php
-include("lang/ta.php");
+include("lang/en.php");
 
 require("models/quescats/mod_ques-cat.php");
 $qc = new qcats();
@@ -66,66 +66,7 @@ $catinfo = $ak->getallinfo($getall);
                     ?>
                     <div class="row">
                         <!-- Left Content -->
-                        <div class="col-lg-5">
-                            <div class="card">
-
-                                <?php
-                                $catname = $catdesc = $catpid = '';
-                                if (isset($_GET['action'])) {
-                                    if ($_GET['action'] == 'edit' && $_GET['id'] != '') {
-                                        $onecquery = $qc->getdata($_GET['id']); //Form the Query
-                                        $catdata = $ak->getallinfo($onecquery); //Fetch the data
-                                        $catname = $catdata[0]['Name'];
-                                        $catdesc = $catdata[0]['Description'];
-                                        $catpid = $catdata[0]['ParentID'];
-
-                                        $btntext = $lng_quescat_update;
-                                        $icon = 'save';
-                                        echo '<div class="card-header">' . $lng_quescat_update . '</div>';
-                                        echo '<div class="card-body">';
-                                        echo '<form method="POST" name="updatecat" action="actions/quescats/ques-cat-update.php">';
-                                        echo '<input type="hidden" name="catid" value="' . $_GET['id'] . '">';
-                                    }
-                                } else {
-                                    $icon = 'plus';
-                                    echo '<div class="card-header">' . $lng_quescat_add . '</div>';
-                                    echo '<div class="card-body">';
-                                    echo '<form method="POST" name="addnewcat" action="actions/quescats/ques-cat-add.php">';
-                                    $btntext = $lng_quescat_add;
-                                }
-
-                                ?>
-                                <div class="form-group"><label for="catname"><?php echo $lng_name; ?></label><input class="form-control" name="catname" id="catname" type="text" placeholder="" required value="<?php echo  $catname; ?>"></div>
-                                <div class="form-group">
-                                    <label for="parentcat"><?php echo $lng_parcat; ?></label>
-                                    <select class="form-control" id="parentcat" name="parentcat">
-                                        <option value="0"><?php echo $lng_none; ?></option>
-
-                                        <?php
-                                        for ($p = 0; $p < count($catinfo); $p++) {
-                                            if ($catinfo[$p]['ParentID'] == 0) {
-                                                if ($catpid == $catinfo[$p]['ID']) {
-                                                    $sel = 'selected="selected"';
-                                                } else {
-                                                    $sel = '';
-                                                }
-                                                echo '<option ' . $sel . ' value="' . $catinfo[$p]['ID'] . '">' . $catinfo[$p]['Name'] . '</option>';
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-
-                                </div>
-                                <div class="form-group"><label for="catdesc"><?php echo $lng_desc; ?></label><textarea name="catdesc" class="form-control" id="catdesc" rows="6"><?php echo  $catdesc; ?></textarea></div>
-                                <div class="form-group">
-                                    <button class="btn btn-success btn-sm" type="submit">
-                                        <i data-feather="<?php echo $icon; ?>"></i>&nbsp;<?php echo $btntext; ?></button>
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-7">
+                        <div class="col-lg-7">
                         <!-- Right Content -->
                         <div>
                             <div class="card">
@@ -231,6 +172,67 @@ $catinfo = $ak->getallinfo($getall);
                             </div>
                         </div>
                     </div>
+
+                        <div class="col-lg-5">
+                            <div class="card">
+
+                                <?php
+                                $catname = $catdesc = $catpid = '';
+                                if (isset($_GET['action'])) {
+                                    if ($_GET['action'] == 'edit' && $_GET['id'] != '') {
+                                        $onecquery = $qc->getdata($_GET['id']); //Form the Query
+                                        $catdata = $ak->getallinfo($onecquery); //Fetch the data
+                                        $catname = $catdata[0]['Name'];
+                                        $catdesc = $catdata[0]['Description'];
+                                        $catpid = $catdata[0]['ParentID'];
+
+                                        $btntext = $lng_quescat_update;
+                                        $icon = 'save';
+                                        echo '<div class="card-header">' . $lng_quescat_update . '</div>';
+                                        echo '<div class="card-body">';
+                                        echo '<form method="POST" name="updatecat" action="actions/quescats/ques-cat-update.php">';
+                                        echo '<input type="hidden" name="catid" value="' . $_GET['id'] . '">';
+                                    }
+                                } else {
+                                    $icon = 'plus';
+                                    echo '<div class="card-header">' . $lng_quescat_add . '</div>';
+                                    echo '<div class="card-body">';
+                                    echo '<form method="POST" name="addnewcat" action="actions/quescats/ques-cat-add.php">';
+                                    $btntext = $lng_quescat_add;
+                                }
+
+                                ?>
+                                <div class="form-group"><label for="catname"><?php echo $lng_name; ?></label><input class="form-control" name="catname" id="catname" type="text" placeholder="" required value="<?php echo  $catname; ?>"></div>
+                                <div class="form-group">
+                                    <label for="parentcat"><?php echo $lng_parcat; ?></label>
+                                    <select class="form-control" id="parentcat" name="parentcat">
+                                        <option value="0"><?php echo $lng_none; ?></option>
+
+                                        <?php
+                                        for ($p = 0; $p < count($catinfo); $p++) {
+                                            if ($catinfo[$p]['ParentID'] == 0) {
+                                                if ($catpid == $catinfo[$p]['ID']) {
+                                                    $sel = 'selected="selected"';
+                                                } else {
+                                                    $sel = '';
+                                                }
+                                                echo '<option ' . $sel . ' value="' . $catinfo[$p]['ID'] . '">' . $catinfo[$p]['Name'] . '</option>';
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+
+                                </div>
+                                <div class="form-group"><label for="catdesc"><?php echo $lng_desc; ?></label><textarea name="catdesc" class="form-control" id="catdesc" rows="6"><?php echo  $catdesc; ?></textarea></div>
+                                <div class="form-group">
+                                    <button class="btn btn-success btn-sm" type="submit">
+                                        <i data-feather="<?php echo $icon; ?>"></i>&nbsp;<?php echo $btntext; ?></button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </main>
             <footer class="footer mt-auto footer-light">
