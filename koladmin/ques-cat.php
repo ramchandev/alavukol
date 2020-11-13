@@ -1,5 +1,5 @@
 <?php 
-include("lang/en.php"); 
+include("lang/ta.php"); 
 
 require ("models/mod_ques-cat.php");
 $qc=new qcats();
@@ -50,26 +50,33 @@ $catinfo=$ak->getallinfo($getall);
                         <!-- Left Content -->
                         <div class="col-lg-5">
                             <div class="card">
-                                <div class="card-header"><?php echo $lng_quescat_add; ?></div>
-                                <div class="card-body">
+                                
                                 <?php
                                 $catname=$catdesc=$catpid='';
-                                if($_GET['action']=='edit' && $_GET['id']!='')
+                                if(isset($_GET['action']))
                                 {
-                                    $onecquery=$qc->getdata($_GET['id']); //Form the Query
-                                    $catdata=$ak->getallinfo($onecquery); //Fetch the data
-                                    $catname=$catdata[0]['Name'];
-                                    $catdesc=$catdata[0]['Description'];
-                                    $catpid=$catdata[0]['ParentID'];
-
-                                    $btntext=$lng_quescat_update;
-                                    $icon='save';
-                                    echo '<form method="POST" name="updatecat" action="actions/ques-cat-update.php">';
-                                    echo '<input type="hidden" name="catid" value="'.$_GET['id'].'">';
-                                }
+                                    if($_GET['action']=='edit' && $_GET['id']!='')
+                                    {
+                                        $onecquery=$qc->getdata($_GET['id']); //Form the Query
+                                        $catdata=$ak->getallinfo($onecquery); //Fetch the data
+                                        $catname=$catdata[0]['Name'];
+                                        $catdesc=$catdata[0]['Description'];
+                                        $catpid=$catdata[0]['ParentID'];
+    
+                                        $btntext=$lng_quescat_update;
+                                        $icon='save';
+                                        echo '<div class="card-header">'.$lng_quescat_update.'</div>';
+                                        echo '<div class="card-body">';
+                                        echo '<form method="POST" name="updatecat" action="actions/ques-cat-update.php">';
+                                        echo '<input type="hidden" name="catid" value="'.$_GET['id'].'">';
+                                       
+                                    }
+                                }                               
                                 else
                                 {
                                     $icon='plus';
+                                    echo '<div class="card-header">'.$lng_quescat_add.'</div>';
+                                        echo '<div class="card-body">';
                                     echo '<form method="POST" name="addnewcat" action="actions/ques-cat-add.php">';
                                     $btntext=$lng_quescat_add;
 

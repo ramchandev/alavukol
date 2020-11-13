@@ -13,3 +13,4 @@ $lng_desc='விளக்கம்';
 $lng_total='மொத்தம்';
 $lng_actions='நடவடிக்கை';
 $lng_cats='பிரிவுகள்';
+$lng_quescat_update='பிரிவைத்திருந்து';

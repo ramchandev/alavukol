@@ -34,12 +34,13 @@ class akol
         $conn->close();
     }
 
-    function insertdata($sql) //Insert data
+    function insupdata($sql) //Insert data
     {
-        include "db-config.php";        
+        include "db-config.php";   
         if ($conn->query($sql) === true ) {
         } else {
             echo 'Error: ' . $sql . '<br>' . $conn->error;
+            exit;
         }
          $conn->close();
 

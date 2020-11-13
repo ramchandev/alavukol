@@ -8,12 +8,11 @@ if($_POST)
     $cat_name = mysqli_real_escape_string($conn, $_POST['catname']);
     $cat_desc = mysqli_real_escape_string($conn, $_POST['catdesc']);
 
-    $query_insertcat="INSERT INTO `kol_quescats` (`ID`, `Name`, `Description`, `Image`, `ParentID`, `Status`, `CreatedOn`) VALUES (NULL, '".$cat_name."', '".$cat_desc."', '', '".$_POST['parentcat']."', '1', CURRENT_TIMESTAMP);";
-
+    $query_update="UPDATE `kol_quescats` SET `Name` = '".$cat_name."', `Description`='". $cat_desc."' , `ParentID`='".$_POST['parentcat']."'  WHERE  `ID` = '".$_POST['catid']."';";
 
     $akins=new akol();
-    $akins->insupdata($query_insertcat);
-    header("location: ".ROOT_URL."/ques-cat.php?msg=catadded");
+    $akins->insupdata($query_update);
+    header("location: ".ROOT_URL."/ques-cat.php?msg=catupdated");
     
 
 }
