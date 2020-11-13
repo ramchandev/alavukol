@@ -43,6 +43,7 @@ class akol
             echo 'Error: ' . $sql . '<br>' . $conn->error;
             exit;
         }
+        return  mysqli_insert_id($conn);         
         $conn->close();
     }
 }

@@ -72,7 +72,7 @@ $questinfo = $ak->getallinfo($getall);
                         <div>
                             <div class="card card-header-actions">
                             <div class="card-header"><?php echo $lng_questions; ?>
-                            <a href="question-new.php" class="btn btn-success btn-sm"> <i data-feather="plus"></i> <?php echo $lng_add_ques;?></a>
+                            <a href="question-op.php" class="btn btn-success btn-sm"> <i data-feather="plus"></i> <?php echo $lng_add_ques;?></a>
                         </div>
                                 <div class="card-body"> 
                                    <div class="datatable">
