@@ -169,25 +169,40 @@ $questinfo = $ak->getallinfo($getall);
                                         <table class="table table-bordered table-hover" id="" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>Options</th>
-                                                    <th>Answer</th>
+                                                    <th>Option</th>
+                                                    <th>Is Answer?</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
                                                 //Get Question Cat data
+                                                if(isset($_GET['qbid']))
+                                    {
                                                 $quesopts_query = $qs->getquesopts($quesnameinfo[0]['ID']);
                                                 $quesopts_data = $ak->getallinfo($quesopts_query);
+                                                if($quesopts_data)
+                                                {
                                                 for($op=0;$op<count($quesopts_data); $op++)
                                                 {
+                                                    if($quesopts_data[$op]['IsAnswer']==1)
+                                                    {
+                                                        $icon='<span class="text-success"><i data-feather="check-circle"></i></span>';
+                                                    }
+                                                    else
+                                                    {
+                                                        $icon='';
+                                                    }
                                                     echo '<tr>
                                                     <td>'.$quesopts_data[$op]['Optiontext'].'</td>
-                                                    <td>'.$quesopts_data[$op]['IsAnswer'].'</td>
-                                                    <td></td>
+                                                    <td>'.$icon.'</td>
+                                                    <td><a href="question-op.php?qbid='.$_GET['qbid'].'&opid='.$quesopts_data[$op]['ID'].'"><div class="btn btn-datatable btn-icon btn-transparent-dark mr-2">
+                                                    <i data-feather="edit-2"></i></div></a><button class="btn btn-datatable btn-icon btn-transparent-dark" data-toggle="modal" data-target="#catdel"><i data-feather="trash-2"></i></button></td>
                                                 </tr>';
 
                                                 }
+                                            }
+                                            }
 
                                                 
 
@@ -201,14 +216,42 @@ $questinfo = $ak->getallinfo($getall);
                                     <?php
                                     if(isset($_GET['qbid']))
                                     {
+                                        $optname=$isans=$ck='';
+                                        if(isset($_GET['opid']) && $_GET['opid']!='')
+                                        {
+                                            
+                                            echo '<form method="POST" name="updateopt" action="actions/questions/ques-option-update.php">';
+                                            echo '<input type="hidden" name="opid" value="'.$_GET['opid'].'">';
+                                            
+                                            $quesopt_query = $qs->getoptdata($_GET['opid']);
+                                            $quesopt_data = $ak->getallinfo($quesopt_query);
+                                            $optname=$quesopt_data[0]['Optiontext'];
+                                            $isans=$quesopt_data[0]['IsAnswer'];
+
+
+                                        }
+                                        else
+                                        {
+                                            echo '<form method="POST" name="addnewques" action="actions/questions/ques-option.php">';
+                                        }
                                     ?>
-                                    <form method="POST" name="addnewques" action="actions/questions/ques-option.php">
+                                    
                                     <div class="form-group">
                                         <label for="questype">Option Name</label>
-                                        <input type="text" class="form-control" name="qoption">
+                                        <input type="text" class="form-control" name="qoption" value="<?php echo $optname;?>">
                                     </div>
                                     <div class="custom-control custom-switch">
-                                        <input type="checkbox" class="custom-control-input" name="isans" id="customSwitch1">
+                                        <?php 
+                                        if($isans==1)
+                                        {
+                                            $ck='checked="checked"';
+                                        }
+                                        else
+                                        {
+                                            $ck='';
+                                        }
+                                        ?>
+                                        <input <?php echo $ck;?> type="checkbox" class="custom-control-input" name="isans" id="customSwitch1">
                                         <label class="custom-control-label" for="customSwitch1">Mark as answer</label>
                                     </div>
                                     <div class="form-group">

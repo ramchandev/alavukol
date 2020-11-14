@@ -1,5 +1,5 @@
 <?php
-include("lang/en.php");
+include("lang/ta.php");
 
 require("models/quescats/mod_ques-cat.php");
 $qc = new qcats();

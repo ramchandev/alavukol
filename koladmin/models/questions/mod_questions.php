@@ -33,5 +33,9 @@ class ques
     {
         return "SELECT * FROM `kol_quesoptions` WHERE `QNID` ='".$qnid."' ORDER BY `ID` ASC";
     }
+    public function getoptdata($qoptid)
+    {
+        return "SELECT * FROM `kol_quesoptions` WHERE `ID` ='".$qoptid."'";
+    }
 
 }
