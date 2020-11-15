@@ -93,33 +93,56 @@ $questinfo = $ak->getallinfo($getall);
                                              $quesname_query=$qs->getquesnames($_GET['qbid']);
                                              $quesnameinfo = $ak->getallinfo($quesname_query);
                                              $quesname=$quesnameinfo[0]['Qname'];
+                                             $qnid=$quesnameinfo[0]['ID'];
 
+                                             echo '<form method="POST" name="addnewques" action="actions/questions/ques-update.php">';
+                                             echo '<input type="hidden" name="qnameid" value="'.$qnid.'">';
+                                             echo '<input type="hidden" name="qbaseid" value="'.$_GET['qbid'].'">';
+                                             $qbtext='Update Question';
+                                             $newques_ins='';
+
+                                        }
+                                        else
+                                        {
+                                           
+                                            echo '<form method="POST" name="addnewques" action="actions/questions/ques-add.php">';
+                                            $qbtext='Create & Continue';
+                                            $newques_ins='* Create a question  first, then add options';
                                         }                                        
                                         ?>
-                                        <form method="POST" name="addnewques" action="actions/questions/ques-add.php">
                                             <div class="form-group">
-                                                <label for="questype"><?php echo $lng_ques_type; ?></label>
+                                            <?php
+                                        
+                                        if(isset($_GET['qbid']))
+                                        {
+ 
+                                             //Get Question Type Data
+                                             $questype_query = $qs->getquestype($questype);
+                                             $questype_data=$ak->getallinfo($questype_query);
+                                             echo "Question Type: " .$questype_data[0]['Name'];
+
+
+                                        }
+                                        else
+                                        {
+                                            
+                                            echo '<label for="questype"><?php echo $lng_ques_type; ?></label>
                                                 <select class="form-control" id="questype" name="questype" required>
-                                                    <option value="">Select a Question Type</option>
-                                                    <?php
+                                                    <option value="">Select a Question Type</option>';
                                                     //Get Question Cat data
                                                     $questypes_query = $qs->getquesalltype();
                                                     $questype_data = $ak->getallinfo($questypes_query);
 
-                                                    for ($qi = 0; $qi < count($questype_data); $qi++) {
-                                                        if($questype==$questype_data[$qi]['ID'])
-                                                        {
-                                                            $sel='selected="selected"';
-
-                                                        }
-                                                        else{
-                                                            $sel='';
-
-                                                        }
-                                                        echo '<option  '.$sel.' value="' . $questype_data[$qi]['ID'] . '">' . $questype_data[$qi]['Name'] . '</option>';
+                                                    for ($qi = 0; $qi < count($questype_data); $qi++) {                                                        
+                                                        echo '<option value="' . $questype_data[$qi]['ID'] . '">' . $questype_data[$qi]['Name'] . '</option>';
                                                     }
-                                                    ?>
-                                                </select>
+                                            
+                                               echo '</select>';
+
+                                        }
+                                        ?>
+
+                                                
                                             </div>
                                             <div class="form-group">
                                                 <label for="quescat"><?php echo $lng_cat; ?></label>
@@ -152,8 +175,8 @@ $questinfo = $ak->getallinfo($getall);
                                             <div class="form-group"><label for="quesname">Question</label><textarea class="form-control" name="quesname" id="quesname" rows="3"><?php echo $quesname;?></textarea></div>
                                             <div class="form-group">
                                             <button class="btn btn-success btn-sm" type="submit">
-                                        <i data-feather="save"></i>&nbsp; Create & Continue</button><br/>
-                                        <small>* Create a question  first, then add options</small>
+                                        <i data-feather="save"></i>&nbsp; <?php echo $qbtext;?></button><br/>
+                                        <small><?php echo $newques_ins;?></small>
                                                 </div>
                                         </form>
                                     </div>

@@ -12,7 +12,7 @@ if($_POST)
     $ques_name = mysqli_real_escape_string($conn, $_POST['quesname']);
  
    //Insert Question Base Data for the Question
-    $query_insertques="INSERT INTO `kol_quesbase` (`ID`, `QTID`, `QCATID`, `Qcomp`, `Status`, `CreatedBy`, `CreatedOn`) VALUES (NULL, '".$_POST['questype']."', '".$_POST['questype']."', '', '1', '1', CURRENT_TIMESTAMP);";    
+    $query_insertques="INSERT INTO `kol_quesbase` (`ID`, `QTID`, `QCATID`, `Qcomp`, `Status`, `CreatedBy`, `CreatedOn`) VALUES (NULL, '".$_POST['questype']."', '".$_POST['quescat']."', '', '1', '1', CURRENT_TIMESTAMP);";    
     $qbid=$akins->insupdata($query_insertques);
 
     //Insert Question Data for the Question
